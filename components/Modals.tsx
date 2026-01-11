@@ -34,10 +34,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onC
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 md:p-4 animate-in fade-in duration-300">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden relative flex flex-col md:flex-row h-auto max-h-[90vh] z-10 animate-in zoom-in-95 duration-300">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden relative flex flex-col md:flex-row h-auto max-h-[90vh] z-10 animate-scale-up duration-300">
         
-        <button onClick={onClose} className="absolute top-3 right-3 z-20 bg-black/20 hover:bg-black/30 p-2 rounded-full transition text-white backdrop-blur-sm">
+        <button onClick={onClose} className="absolute top-3 right-3 z-20 bg-black/20 hover:bg-black/30 p-2 rounded-full transition text-white backdrop-blur-sm transform hover:rotate-90 duration-300">
           <X className="w-5 h-5 md:w-6 md:h-6" />
         </button>
 
@@ -53,21 +53,21 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onC
           <div className="flex items-center justify-between md:justify-start gap-4 mb-6 md:mb-8 mt-auto md:mt-0">
             <span className="text-xl md:text-2xl font-bold text-gray-900">{formatCurrency(product.price)}</span>
             <div className="flex items-center border border-gray-300 rounded-full px-2 py-1">
-              <button onClick={() => handleAdjustQty(-1)} className="p-2 text-gray-500 hover:text-amber-600">
+              <button onClick={() => handleAdjustQty(-1)} className="p-2 text-gray-500 hover:text-amber-600 transition-colors active:scale-75 transform">
                 <Minus className="w-4 h-4" />
               </button>
-              <span className="px-3 font-bold text-gray-900">{qty}</span>
-              <button onClick={() => handleAdjustQty(1)} className="p-2 text-gray-500 hover:text-amber-600">
+              <span className="px-3 font-bold text-gray-900 min-w-[1.5rem] text-center">{qty}</span>
+              <button onClick={() => handleAdjustQty(1)} className="p-2 text-gray-500 hover:text-amber-600 transition-colors active:scale-75 transform">
                 <Plus className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           <div className="flex flex-col gap-3">
-            <button onClick={handleAddToCart} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition active:scale-95 flex justify-center gap-2 items-center text-base">
+            <button onClick={handleAddToCart} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition-all duration-200 active:scale-95 hover:shadow-xl flex justify-center gap-2 items-center text-base">
               <ShoppingBag className="w-5 h-5" /> Adicionar ao Carrinho
             </button>
-            <button onClick={onClose} className="w-full text-gray-500 hover:text-gray-900 py-2 font-medium text-sm">
+            <button onClick={onClose} className="w-full text-gray-500 hover:text-gray-900 py-2 font-medium text-sm transition-colors">
               Continuar Comprando
             </button>
           </div>
@@ -126,12 +126,12 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 animate-in fade-in">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative z-10 animate-in zoom-in-95">
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
+      <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative z-10 animate-scale-up">
         
         {/* Header */}
         <div className="bg-gray-900 p-4 text-center relative">
-           <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white">
+           <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
              <X className="w-5 h-5" />
            </button>
            <h3 className="text-white font-bold text-lg flex items-center justify-center gap-2">
@@ -148,9 +148,8 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
                   Escaneie o QR Code abaixo ou copie o código para pagar.
                 </p>
 
-                {/* QR Code Image - Simulated logic for base64 display */}
-                <div className="w-48 h-48 bg-gray-100 border-2 border-amber-500 rounded-lg mb-6 p-2 flex items-center justify-center">
-                    {/* Em produção, use: src={`data:image/png;base64,${pixData.point_of_interaction.transaction_data.qr_code_base64}`} */}
+                {/* QR Code Image */}
+                <div className="w-48 h-48 bg-gray-100 border-2 border-amber-500 rounded-lg mb-6 p-2 flex items-center justify-center shadow-inner">
                     <img 
                       src={`data:image/png;base64,${pixData.point_of_interaction.transaction_data.qr_code_base64}`} 
                       alt="QR Code PIX" 
@@ -169,7 +168,7 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
                         />
                         <button 
                             onClick={handleCopy}
-                            className={`p-2 rounded-lg transition-colors ${copied ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                            className={`p-2 rounded-lg transition-all duration-200 active:scale-95 ${copied ? 'bg-green-500 text-white shadow-green-200' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
                             title="Copiar código"
                         >
                             {copied ? <CheckCircle className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
@@ -191,8 +190,8 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
                 </div>
             </>
           ) : (
-            <div className="py-10 flex flex-col items-center text-center animate-in zoom-in">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <div className="py-10 flex flex-col items-center text-center animate-scale-up">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-green-100">
                     <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Pagamento Aprovado!</h2>
@@ -266,20 +265,24 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
             <ShoppingCart className="text-amber-500 w-5 h-5" />
             <h2 className="font-serif text-lg md:text-xl font-bold text-gray-900">Seu Pedido</h2>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-900 p-2">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-900 p-2 transition-transform hover:rotate-90">
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
           {cart.length === 0 ? (
-            <div className="text-center text-gray-500 mt-10">
+            <div className="text-center text-gray-500 mt-10 animate-fade-in-up">
               <ShoppingBasket className="w-12 h-12 mx-auto mb-3 opacity-30" />
               <p>Seu carrinho está vazio.</p>
             </div>
           ) : (
-            cart.map(item => (
-              <div key={item.id} className="flex gap-4 items-center bg-gray-50 p-3 rounded-lg">
+            cart.map((item, index) => (
+              <div 
+                key={item.id} 
+                className="flex gap-4 items-center bg-gray-50 p-3 rounded-lg animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <img src={item.img} alt={item.title} className="w-16 h-16 rounded-md object-cover flex-shrink-0" />
                 <div className="flex-1">
                   <h4 className="font-bold text-sm text-gray-900">{item.title}</h4>
@@ -288,7 +291,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                     <span className="text-gray-500 text-xs font-bold">Sub: {formatCurrency(item.price * item.qty)}</span>
                   </div>
                 </div>
-                <button onClick={() => onRemove(item.id)} className="text-red-400 hover:text-red-600 p-2">
+                <button onClick={() => onRemove(item.id)} className="text-red-400 hover:text-red-600 p-2 transition-transform hover:scale-110">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -297,7 +300,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
         </div>
 
         {cart.length > 0 && (
-          <div className="p-4 md:p-6 border-t bg-gray-50">
+          <div className="p-4 md:p-6 border-t bg-gray-50 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <div className="mb-4 space-y-3">
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">Nome Completo *</label>
@@ -305,7 +308,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                   type="text" 
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-shadow" 
                   placeholder="Seu nome" 
                 />
               </div>
@@ -316,7 +319,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                     type="email" 
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm" 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-shadow" 
                     placeholder="email@exemplo.com" 
                     />
                 </div>
@@ -326,7 +329,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                     type="text" 
                     value={formData.cpf}
                     onChange={(e) => handleChange('cpf', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm" 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm transition-shadow" 
                     placeholder="000.000.000-00" 
                     />
                 </div>
@@ -338,7 +341,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                 <div className="grid grid-cols-2 gap-3">
                     <button 
                         onClick={() => handleChange('deliveryMethod', 'delivery')}
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${formData.deliveryMethod === 'delivery' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-gray-200 hover:border-gray-300 text-gray-600'}`}
+                        className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all duration-200 active:scale-95 ${formData.deliveryMethod === 'delivery' ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm' : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50'}`}
                     >
                         <Truck className="w-6 h-6 mb-1" />
                         <span className="text-xs font-bold">Entrega</span>
@@ -346,7 +349,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                     </button>
                     <button 
                         onClick={() => handleChange('deliveryMethod', 'pickup')}
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${formData.deliveryMethod === 'pickup' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-gray-200 hover:border-gray-300 text-gray-600'}`}
+                        className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all duration-200 active:scale-95 ${formData.deliveryMethod === 'pickup' ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm' : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50'}`}
                     >
                         <Store className="w-6 h-6 mb-1" />
                         <span className="text-xs font-bold">Retirada</span>
@@ -356,13 +359,13 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
               </div>
 
               {formData.deliveryMethod === 'delivery' && (
-                <div className="animate-in fade-in slide-in-from-top-1">
+                <div className="animate-fade-in-up">
                     <label className="block text-xs font-bold text-gray-700 mb-1">Endereço de Entrega *</label>
                     <textarea 
                     value={formData.address}
                     onChange={(e) => handleChange('address', e.target.value)}
                     rows={2} 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none text-sm" 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none text-sm transition-shadow" 
                     placeholder="Rua, Número, Bairro..." 
                     />
                 </div>
@@ -373,7 +376,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
                 <select 
                   value={formData.payment}
                   onChange={(e) => handleChange('payment', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm bg-white"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-sm bg-white transition-shadow"
                 >
                   <option value="" disabled>Selecione...</option>
                   <option value="PIX">PIX (Aprovação Imediata)</option>
@@ -402,7 +405,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, cart, onClose, onR
             <button 
                 onClick={handleCheckout} 
                 disabled={isProcessing}
-                className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition active:scale-95 flex justify-center items-center gap-2 text-base"
+                className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition-all duration-200 active:scale-95 flex justify-center items-center gap-2 text-base hover:shadow-xl"
             >
               {isProcessing ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
