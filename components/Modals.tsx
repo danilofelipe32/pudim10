@@ -159,9 +159,9 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
                 </div>
 
                 {/* Copy Paste */}
-                <div className="w-full mb-6">
+                <div className="w-full mb-8 relative">
                     <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Pix Copia e Cola</label>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 relative z-10">
                         <input 
                             readOnly 
                             value={pixData.point_of_interaction.transaction_data.qr_code}
@@ -170,9 +170,17 @@ export const PixModal: React.FC<PixModalProps> = ({ isOpen, pixData, onClose, on
                         <button 
                             onClick={handleCopy}
                             className={`p-2 rounded-lg transition-colors ${copied ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                            title="Copiar código"
                         >
                             {copied ? <CheckCircle className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                         </button>
+                    </div>
+
+                     {/* Feedback Message */}
+                    <div className={`absolute left-0 right-0 -bottom-6 text-center transition-all duration-300 ${copied ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+                        <span className="text-green-600 text-xs font-bold inline-flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3" /> Código copiado!
+                        </span>
                     </div>
                 </div>
 
